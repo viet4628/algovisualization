@@ -47,7 +47,7 @@ function Index() {
       <section className="mx-auto max-w-7xl px-6 py-16">
         <div className="flex items-baseline justify-between mb-8">
           <h2 className="font-serif text-3xl font-semibold">Chủ đề</h2>
-          <span className="text-sm text-muted-foreground font-mono">04 / chương</span>
+          <span className="text-sm text-muted-foreground font-mono">06 / chương</span>
         </div>
         <div className="grid gap-px bg-border md:grid-cols-2 border border-border rounded-md overflow-hidden">
           {topics.map((t, i) => (
