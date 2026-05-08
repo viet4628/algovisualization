@@ -19,6 +19,8 @@ export function TreeVisualizer() {
   const [algo, setAlgo] = useState<Key>("inorder");
   const [values, setValues] = useState<number[]>([50, 30, 70, 20, 40, 60, 80, 10, 35]);
   const [input, setInput] = useState("");
+  const [target, setTarget] = useState(40);
+  const needsTarget = algo === "bstSearch" || algo === "bstInsert";
 
   const tree = useMemo(() => {
     const t = buildBST(values);
@@ -26,7 +28,7 @@ export function TreeVisualizer() {
     return t;
   }, [values]);
 
-  const steps = useMemo(() => treeAlgorithms[algo].fn(tree), [algo, tree]);
+  const steps = useMemo(() => treeAlgorithms[algo].fn(tree, target), [algo, tree, target]);
   const player = usePlayer(steps.length);
   const cur = steps[player.step] ?? steps[0];
   const meta = treeAlgorithms[algo];
