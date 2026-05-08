@@ -8,7 +8,9 @@ const navItems = [
   { to: "/sorting", label: "Sắp xếp" },
   { to: "/searching", label: "Tìm kiếm" },
   { to: "/graph", label: "Đồ thị" },
-  { to: "/tree", label: "Cây nhị phân" },
+  { to: "/tree", label: "Cây" },
+  { to: "/string", label: "Chuỗi" },
+  { to: "/dp", label: "DP" },
 ];
 
 export function Header() {
