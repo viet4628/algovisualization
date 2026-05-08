@@ -34,8 +34,8 @@
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
   --color-highlight: var(--highlight);
-  --font-serif: "Source Serif 4", Georgia, serif;
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
