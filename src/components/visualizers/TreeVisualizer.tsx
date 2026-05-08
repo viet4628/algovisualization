@@ -75,6 +75,12 @@ export function TreeVisualizer() {
           <h3 className="font-serif text-base font-semibold">Xây BST</h3>
           <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="vd: 50,30,70,20,40" className="w-full rounded-md border border-input bg-background px-2.5 py-1.5 text-sm" />
           <button onClick={applyInput} className="w-full rounded-md bg-secondary py-1.5 text-sm font-medium hover:opacity-90">Tạo cây</button>
+          {needsTarget && (
+            <div>
+              <label className="text-xs text-muted-foreground">Giá trị mục tiêu</label>
+              <input type="number" value={target} onChange={(e) => setTarget(Number(e.target.value))} className="w-full rounded-md border border-input bg-background px-2.5 py-1.5 text-sm" />
+            </div>
+          )}
           <button onClick={logRun} className="w-full rounded-md bg-accent py-1.5 text-sm font-medium text-accent-foreground hover:opacity-90">Lưu vào lịch sử</button>
         </div>
       </aside>
