@@ -99,8 +99,8 @@ export function TreeVisualizer() {
               const tc = visited || current ? "oklch(0.98 0 0)" : "oklch(0.20 0.02 250)";
               return (
                 <g key={n.id}>
-                  <circle cx={n.x} cy={n.y} r={20} fill={fill} stroke={stroke} strokeWidth={2} />
-                  <text x={n.x} y={n.y + 5} fontSize="13" fontWeight="600" fill={tc} textAnchor="middle" className="font-mono">{n.value}</text>
+                  <circle cx={n.x ?? 0} cy={n.y ?? 0} r={20} fill={fill} stroke={stroke} strokeWidth={2} />
+                  <text x={n.x ?? 0} y={(n.y ?? 0) + 5} fontSize="13" fontWeight="600" fill={tc} textAnchor="middle" className="font-mono">{n.value}</text>
                 </g>
               );
             })}
