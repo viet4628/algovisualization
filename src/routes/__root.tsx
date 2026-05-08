@@ -78,10 +78,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Khám phá thuật toán sắp xếp, tìm kiếm, đồ thị và cây nhị phân qua animation từng bước." },
       { name: "author", content: "Algorithmica" },
       { property: "og:title", content: "Algorithmica — Trực quan hóa thuật toán" },
-      { property: "og:description", content: "Khám phá thuật toán qua animation từng bước." },
+      { property: "og:description", content: "Khám phá thuật toán sắp xếp, tìm kiếm, đồ thị và cây nhị phân qua animation từng bước." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Algorithmica — Trực quan hóa thuật toán" },
+      { name: "twitter:description", content: "Khám phá thuật toán sắp xếp, tìm kiếm, đồ thị và cây nhị phân qua animation từng bước." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4fd220ac-2566-4271-9fac-bf9925d78bf3/id-preview-d1fe54a3--788f24d1-4d59-4ad4-8ad2-89314345e9ed.lovable.app-1778227084180.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4fd220ac-2566-4271-9fac-bf9925d78bf3/id-preview-d1fe54a3--788f24d1-4d59-4ad4-8ad2-89314345e9ed.lovable.app-1778227084180.png" },
     ],
     links: [
       {
