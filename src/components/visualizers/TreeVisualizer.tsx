@@ -89,7 +89,7 @@ export function TreeVisualizer() {
         <div className="rounded-md border border-border bg-card p-4">
           <svg viewBox="0 0 640 360" className="w-full h-auto">
             {allEdges.map((e, i) => (
-              <line key={i} x1={e.from.x} y1={e.from.y} x2={e.to.x} y2={e.to.y} stroke="oklch(0.75 0.01 85)" strokeWidth={1.5} />
+              <line key={i} x1={e.from.x ?? 0} y1={e.from.y ?? 0} x2={e.to.x ?? 0} y2={e.to.y ?? 0} stroke="oklch(0.75 0.01 85)" strokeWidth={1.5} />
             ))}
             {nodes.map((n) => {
               const visited = cur.visited.includes(n.value);
