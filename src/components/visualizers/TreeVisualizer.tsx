@@ -19,6 +19,8 @@ export function TreeVisualizer() {
   const [algo, setAlgo] = useState<Key>("inorder");
   const [values, setValues] = useState<number[]>([50, 30, 70, 20, 40, 60, 80, 10, 35]);
   const [input, setInput] = useState("");
+  const [target, setTarget] = useState(40);
+  const needsTarget = algo === "bstSearch" || algo === "bstInsert";
 
   const tree = useMemo(() => {
     const t = buildBST(values);
@@ -26,7 +28,7 @@ export function TreeVisualizer() {
     return t;
   }, [values]);
 
-  const steps = useMemo(() => treeAlgorithms[algo].fn(tree), [algo, tree]);
+  const steps = useMemo(() => treeAlgorithms[algo].fn(tree, target), [algo, tree, target]);
   const player = usePlayer(steps.length);
   const cur = steps[player.step] ?? steps[0];
   const meta = treeAlgorithms[algo];
@@ -73,6 +75,12 @@ export function TreeVisualizer() {
           <h3 className="font-serif text-base font-semibold">Xây BST</h3>
           <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="vd: 50,30,70,20,40" className="w-full rounded-md border border-input bg-background px-2.5 py-1.5 text-sm" />
           <button onClick={applyInput} className="w-full rounded-md bg-secondary py-1.5 text-sm font-medium hover:opacity-90">Tạo cây</button>
+          {needsTarget && (
+            <div>
+              <label className="text-xs text-muted-foreground">Giá trị mục tiêu</label>
+              <input type="number" value={target} onChange={(e) => setTarget(Number(e.target.value))} className="w-full rounded-md border border-input bg-background px-2.5 py-1.5 text-sm" />
+            </div>
+          )}
           <button onClick={logRun} className="w-full rounded-md bg-accent py-1.5 text-sm font-medium text-accent-foreground hover:opacity-90">Lưu vào lịch sử</button>
         </div>
       </aside>

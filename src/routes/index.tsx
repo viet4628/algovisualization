@@ -1,16 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
-import { ArrowRight, BarChart3, Search, Network, GitBranch } from "lucide-react";
+import { ArrowRight, BarChart3, Search, Network, GitBranch, Type, Table2 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
 const topics = [
-  { to: "/sorting", icon: BarChart3, title: "Sắp xếp", desc: "Bubble, Selection, Insertion, Quick, Merge", count: "5 thuật toán" },
-  { to: "/searching", icon: Search, title: "Tìm kiếm", desc: "Linear Search và Binary Search", count: "2 thuật toán" },
-  { to: "/graph", icon: Network, title: "Đồ thị", desc: "BFS, DFS, Dijkstra trên đồ thị có trọng số", count: "3 thuật toán" },
-  { to: "/tree", icon: GitBranch, title: "Cây nhị phân", desc: "In-order, Pre-order, Post-order trên BST", count: "3 thuật toán" },
+  { to: "/sorting", icon: BarChart3, title: "Sắp xếp", desc: "Bubble, Selection, Insertion, Quick, Merge, Heap, Shell, Cocktail, Gnome, Counting, Radix", count: "11 thuật toán" },
+  { to: "/searching", icon: Search, title: "Tìm kiếm", desc: "Linear, Binary, Jump, Interpolation, Exponential, Ternary", count: "6 thuật toán" },
+  { to: "/graph", icon: Network, title: "Đồ thị", desc: "BFS, DFS, Dijkstra, Bellman-Ford, Prim, Kruskal, Topological Sort", count: "7 thuật toán" },
+  { to: "/tree", icon: GitBranch, title: "Cây nhị phân", desc: "In/Pre/Post-order, Level-order, BST Search, BST Insert", count: "6 thuật toán" },
+  { to: "/string", icon: Type, title: "Khớp chuỗi", desc: "Naive, KMP, Rabin-Karp", count: "3 thuật toán" },
+  { to: "/dp", icon: Table2, title: "Quy hoạch động", desc: "Fibonacci, 0/1 Knapsack, LCS, Coin Change", count: "4 bài toán" },
 ] as const;
 
 function Index() {
@@ -45,7 +47,7 @@ function Index() {
       <section className="mx-auto max-w-7xl px-6 py-16">
         <div className="flex items-baseline justify-between mb-8">
           <h2 className="font-serif text-3xl font-semibold">Chủ đề</h2>
-          <span className="text-sm text-muted-foreground font-mono">04 / chương</span>
+          <span className="text-sm text-muted-foreground font-mono">06 / chương</span>
         </div>
         <div className="grid gap-px bg-border md:grid-cols-2 border border-border rounded-md overflow-hidden">
           {topics.map((t, i) => (

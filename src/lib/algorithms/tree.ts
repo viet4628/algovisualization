@@ -103,8 +103,63 @@ export function postorderTraversal(root: TreeNode | null): TreeStep[] {
   return steps;
 }
 
+export function levelOrderTraversal(root: TreeNode | null): TreeStep[] {
+  const steps: TreeStep[] = [];
+  const visited: number[] = [];
+  if (!root) return steps;
+  const queue: TreeNode[] = [root];
+  while (queue.length) {
+    const n = queue.shift()!;
+    visited.push(n.value);
+    steps.push({ visited: [...visited], current: n.value, description: `Thăm ${n.value} (BFS theo mức)` });
+    if (n.left) queue.push(n.left);
+    if (n.right) queue.push(n.right);
+  }
+  steps.push({ visited: [...visited], description: "Hoàn tất duyệt theo mức" });
+  return steps;
+}
+
+export function bstSearch(root: TreeNode | null, target = 0): TreeStep[] {
+  const steps: TreeStep[] = [];
+  const visited: number[] = [];
+  function go(n: TreeNode | null) {
+    if (!n) {
+      steps.push({ visited: [...visited], description: `Không tìm thấy ${target}` });
+      return;
+    }
+    visited.push(n.value);
+    steps.push({ visited: [...visited], current: n.value, description: `So sánh ${target} với ${n.value}` });
+    if (target === n.value) {
+      steps.push({ visited: [...visited], current: n.value, description: `Tìm thấy ${target}!` });
+      return;
+    }
+    go(target < n.value ? n.left : n.right);
+  }
+  go(root);
+  return steps;
+}
+
+export function bstInsertAnimation(root: TreeNode | null, value = 0): TreeStep[] {
+  const steps: TreeStep[] = [];
+  const visited: number[] = [];
+  function go(n: TreeNode | null) {
+    if (!n) {
+      steps.push({ visited: [...visited], description: `Chèn ${value} ở vị trí trống` });
+      return;
+    }
+    visited.push(n.value);
+    steps.push({ visited: [...visited], current: n.value, description: `${value} ${value < n.value ? "<" : ">"} ${n.value}, đi sang ${value < n.value ? "trái" : "phải"}` });
+    go(value < n.value ? n.left : n.right);
+  }
+  go(root);
+  return steps;
+}
+
 export const treeAlgorithms = {
   inorder: { name: "In-order", fn: inorderTraversal, complexity: "O(n)", description: "Trái → Gốc → Phải. Trả về dãy tăng dần với BST." },
   preorder: { name: "Pre-order", fn: preorderTraversal, complexity: "O(n)", description: "Gốc → Trái → Phải. Dùng để sao chép cây." },
   postorder: { name: "Post-order", fn: postorderTraversal, complexity: "O(n)", description: "Trái → Phải → Gốc. Dùng để xóa cây." },
+  levelorder: { name: "Level-order (BFS)", fn: levelOrderTraversal, complexity: "O(n)", description: "Duyệt theo từng mức (BFS), dùng hàng đợi." },
+  bstSearch: { name: "BST Search", fn: bstSearch, complexity: "O(h)", description: "Tìm kiếm trên cây tìm kiếm nhị phân, đi trái/phải theo so sánh." },
+  bstInsert: { name: "BST Insert", fn: bstInsertAnimation, complexity: "O(h)", description: "Mô phỏng tìm vị trí trống để chèn giá trị mới vào BST." },
 } as const;
