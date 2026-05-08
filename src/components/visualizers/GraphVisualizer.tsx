@@ -67,9 +67,12 @@ export function GraphVisualizer() {
               const a = g.nodes.find((n) => n.id === e.from)!;
               const b = g.nodes.find((n) => n.id === e.to)!;
               const active = cur.edge && ((cur.edge[0] === e.from && cur.edge[1] === e.to) || (cur.edge[0] === e.to && cur.edge[1] === e.from));
+              const inMst = cur.mstEdges?.some(([f, t]) => (f === e.from && t === e.to) || (f === e.to && t === e.from));
+              const stroke = inMst ? "oklch(0.55 0.14 150)" : active ? "oklch(0.55 0.14 35)" : "oklch(0.75 0.01 85)";
+              const sw = inMst || active ? 3 : 1.5;
               return (
                 <g key={i}>
-                  <line x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke={active ? "oklch(0.55 0.14 35)" : "oklch(0.75 0.01 85)"} strokeWidth={active ? 3 : 1.5} />
+                  <line x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke={stroke} strokeWidth={sw} />
                   <text x={(a.x + b.x) / 2} y={(a.y + b.y) / 2 - 6} fontSize="11" fill="oklch(0.45 0.02 250)" textAnchor="middle" className="font-mono">{e.weight}</text>
                 </g>
               );
