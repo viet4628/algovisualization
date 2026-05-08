@@ -10,16 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TreeRouteImport } from './routes/tree'
+import { Route as StringRouteImport } from './routes/string'
 import { Route as SortingRouteImport } from './routes/sorting'
 import { Route as SearchingRouteImport } from './routes/searching'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as GraphRouteImport } from './routes/graph'
+import { Route as DpRouteImport } from './routes/dp'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TreeRoute = TreeRouteImport.update({
   id: '/tree',
   path: '/tree',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StringRoute = StringRouteImport.update({
+  id: '/string',
+  path: '/string',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SortingRoute = SortingRouteImport.update({
@@ -42,6 +49,11 @@ const GraphRoute = GraphRouteImport.update({
   path: '/graph',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DpRoute = DpRouteImport.update({
+  id: '/dp',
+  path: '/dp',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -56,29 +68,35 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/dp': typeof DpRoute
   '/graph': typeof GraphRoute
   '/history': typeof HistoryRoute
   '/searching': typeof SearchingRoute
   '/sorting': typeof SortingRoute
+  '/string': typeof StringRoute
   '/tree': typeof TreeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/dp': typeof DpRoute
   '/graph': typeof GraphRoute
   '/history': typeof HistoryRoute
   '/searching': typeof SearchingRoute
   '/sorting': typeof SortingRoute
+  '/string': typeof StringRoute
   '/tree': typeof TreeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/dp': typeof DpRoute
   '/graph': typeof GraphRoute
   '/history': typeof HistoryRoute
   '/searching': typeof SearchingRoute
   '/sorting': typeof SortingRoute
+  '/string': typeof StringRoute
   '/tree': typeof TreeRoute
 }
 export interface FileRouteTypes {
@@ -86,38 +104,46 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/dp'
     | '/graph'
     | '/history'
     | '/searching'
     | '/sorting'
+    | '/string'
     | '/tree'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/dp'
     | '/graph'
     | '/history'
     | '/searching'
     | '/sorting'
+    | '/string'
     | '/tree'
   id:
     | '__root__'
     | '/'
     | '/auth'
+    | '/dp'
     | '/graph'
     | '/history'
     | '/searching'
     | '/sorting'
+    | '/string'
     | '/tree'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
+  DpRoute: typeof DpRoute
   GraphRoute: typeof GraphRoute
   HistoryRoute: typeof HistoryRoute
   SearchingRoute: typeof SearchingRoute
   SortingRoute: typeof SortingRoute
+  StringRoute: typeof StringRoute
   TreeRoute: typeof TreeRoute
 }
 
@@ -128,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: '/tree'
       fullPath: '/tree'
       preLoaderRoute: typeof TreeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/string': {
+      id: '/string'
+      path: '/string'
+      fullPath: '/string'
+      preLoaderRoute: typeof StringRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sorting': {
@@ -158,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GraphRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dp': {
+      id: '/dp'
+      path: '/dp'
+      fullPath: '/dp'
+      preLoaderRoute: typeof DpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -178,12 +218,24 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
+  DpRoute: DpRoute,
   GraphRoute: GraphRoute,
   HistoryRoute: HistoryRoute,
   SearchingRoute: SearchingRoute,
   SortingRoute: SortingRoute,
+  StringRoute: StringRoute,
   TreeRoute: TreeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
