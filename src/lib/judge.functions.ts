@@ -122,7 +122,7 @@ export const submitSolution = createServerFn({ method: "POST" })
       } catch (e: any) {
         finalStatus = "runtime_error";
         firstError = e?.message ?? "Lỗi gọi Judge0";
-        results.push({ case_id: tc.id, status: "error", message: firstError });
+        results.push({ case_id: tc.id, status: "error", message: firstError ?? undefined });
         break;
       }
 
