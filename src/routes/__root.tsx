@@ -9,6 +9,8 @@ import {
 } from "@tanstack/react-router";
 
 import { Toaster } from "sonner";
+import { ThemeProvider } from "@/lib/useTheme";
+import { useScrollReveal } from "@/lib/useReveal";
 
 import appCss from "../styles.css?url";
 
@@ -119,11 +121,14 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useScrollReveal();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
-      <Toaster richColors position="top-right" />
+      <ThemeProvider>
+        <Outlet />
+        <Toaster richColors position="top-right" />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
