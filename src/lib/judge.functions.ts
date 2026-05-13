@@ -112,7 +112,8 @@ export const submitSolution = createServerFn({ method: "POST" })
     let maxMem = 0;
     let finalStatus: string = "accepted";
     let firstError: string | null = null;
-    const results: Array<Record<string, unknown>> = [];
+    type CaseResult = { case_id: string; status: string; time_ms?: number; memory_kb?: number; output?: string; expected?: string; message?: string };
+    const results: CaseResult[] = [];
 
     for (const tc of testCases) {
       let r: Judge0Result;
