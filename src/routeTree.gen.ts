@@ -13,11 +13,14 @@ import { Route as TreeRouteImport } from './routes/tree'
 import { Route as StringRouteImport } from './routes/string'
 import { Route as SortingRouteImport } from './routes/sorting'
 import { Route as SearchingRouteImport } from './routes/searching'
+import { Route as ProblemsRouteImport } from './routes/problems'
+import { Route as LearnRouteImport } from './routes/learn'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as GraphRouteImport } from './routes/graph'
 import { Route as DpRouteImport } from './routes/dp'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProblemsSlugRouteImport } from './routes/problems.$slug'
 
 const TreeRoute = TreeRouteImport.update({
   id: '/tree',
@@ -37,6 +40,16 @@ const SortingRoute = SortingRouteImport.update({
 const SearchingRoute = SearchingRouteImport.update({
   id: '/searching',
   path: '/searching',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProblemsRoute = ProblemsRouteImport.update({
+  id: '/problems',
+  path: '/problems',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HistoryRoute = HistoryRouteImport.update({
@@ -64,6 +77,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProblemsSlugRoute = ProblemsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ProblemsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -71,10 +89,13 @@ export interface FileRoutesByFullPath {
   '/dp': typeof DpRoute
   '/graph': typeof GraphRoute
   '/history': typeof HistoryRoute
+  '/learn': typeof LearnRoute
+  '/problems': typeof ProblemsRouteWithChildren
   '/searching': typeof SearchingRoute
   '/sorting': typeof SortingRoute
   '/string': typeof StringRoute
   '/tree': typeof TreeRoute
+  '/problems/$slug': typeof ProblemsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -82,10 +103,13 @@ export interface FileRoutesByTo {
   '/dp': typeof DpRoute
   '/graph': typeof GraphRoute
   '/history': typeof HistoryRoute
+  '/learn': typeof LearnRoute
+  '/problems': typeof ProblemsRouteWithChildren
   '/searching': typeof SearchingRoute
   '/sorting': typeof SortingRoute
   '/string': typeof StringRoute
   '/tree': typeof TreeRoute
+  '/problems/$slug': typeof ProblemsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -94,10 +118,13 @@ export interface FileRoutesById {
   '/dp': typeof DpRoute
   '/graph': typeof GraphRoute
   '/history': typeof HistoryRoute
+  '/learn': typeof LearnRoute
+  '/problems': typeof ProblemsRouteWithChildren
   '/searching': typeof SearchingRoute
   '/sorting': typeof SortingRoute
   '/string': typeof StringRoute
   '/tree': typeof TreeRoute
+  '/problems/$slug': typeof ProblemsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -107,10 +134,13 @@ export interface FileRouteTypes {
     | '/dp'
     | '/graph'
     | '/history'
+    | '/learn'
+    | '/problems'
     | '/searching'
     | '/sorting'
     | '/string'
     | '/tree'
+    | '/problems/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -118,10 +148,13 @@ export interface FileRouteTypes {
     | '/dp'
     | '/graph'
     | '/history'
+    | '/learn'
+    | '/problems'
     | '/searching'
     | '/sorting'
     | '/string'
     | '/tree'
+    | '/problems/$slug'
   id:
     | '__root__'
     | '/'
@@ -129,10 +162,13 @@ export interface FileRouteTypes {
     | '/dp'
     | '/graph'
     | '/history'
+    | '/learn'
+    | '/problems'
     | '/searching'
     | '/sorting'
     | '/string'
     | '/tree'
+    | '/problems/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -141,6 +177,8 @@ export interface RootRouteChildren {
   DpRoute: typeof DpRoute
   GraphRoute: typeof GraphRoute
   HistoryRoute: typeof HistoryRoute
+  LearnRoute: typeof LearnRoute
+  ProblemsRoute: typeof ProblemsRouteWithChildren
   SearchingRoute: typeof SearchingRoute
   SortingRoute: typeof SortingRoute
   StringRoute: typeof StringRoute
@@ -175,6 +213,20 @@ declare module '@tanstack/react-router' {
       path: '/searching'
       fullPath: '/searching'
       preLoaderRoute: typeof SearchingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/problems': {
+      id: '/problems'
+      path: '/problems'
+      fullPath: '/problems'
+      preLoaderRoute: typeof ProblemsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/history': {
@@ -212,8 +264,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/problems/$slug': {
+      id: '/problems/$slug'
+      path: '/$slug'
+      fullPath: '/problems/$slug'
+      preLoaderRoute: typeof ProblemsSlugRouteImport
+      parentRoute: typeof ProblemsRoute
+    }
   }
 }
+
+interface ProblemsRouteChildren {
+  ProblemsSlugRoute: typeof ProblemsSlugRoute
+}
+
+const ProblemsRouteChildren: ProblemsRouteChildren = {
+  ProblemsSlugRoute: ProblemsSlugRoute,
+}
+
+const ProblemsRouteWithChildren = ProblemsRoute._addFileChildren(
+  ProblemsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -221,6 +292,8 @@ const rootRouteChildren: RootRouteChildren = {
   DpRoute: DpRoute,
   GraphRoute: GraphRoute,
   HistoryRoute: HistoryRoute,
+  LearnRoute: LearnRoute,
+  ProblemsRoute: ProblemsRouteWithChildren,
   SearchingRoute: SearchingRoute,
   SortingRoute: SortingRoute,
   StringRoute: StringRoute,
