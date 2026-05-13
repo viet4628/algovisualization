@@ -9,6 +9,8 @@ import {
 } from "@tanstack/react-router";
 
 import { Toaster } from "sonner";
+import { ThemeProvider } from "@/lib/useTheme";
+import { useScrollReveal } from "@/lib/useReveal";
 
 import appCss from "../styles.css?url";
 
