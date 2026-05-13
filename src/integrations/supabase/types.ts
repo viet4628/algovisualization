@@ -44,6 +44,57 @@ export type Database = {
         }
         Relationships: []
       }
+      problems: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string
+          difficulty: string
+          id: string
+          is_published: boolean
+          memory_limit_kb: number
+          related_algo: string | null
+          slug: string
+          starter_code: Json
+          tags: string[]
+          time_limit_ms: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description: string
+          difficulty?: string
+          id?: string
+          is_published?: boolean
+          memory_limit_kb?: number
+          related_algo?: string | null
+          slug: string
+          starter_code?: Json
+          tags?: string[]
+          time_limit_ms?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          difficulty?: string
+          id?: string
+          is_published?: boolean
+          memory_limit_kb?: number
+          related_algo?: string | null
+          slug?: string
+          starter_code?: Json
+          tags?: string[]
+          time_limit_ms?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -65,15 +116,145 @@ export type Database = {
         }
         Relationships: []
       }
+      submissions: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          id: string
+          language: string
+          memory_kb: number | null
+          passed_count: number
+          problem_id: string
+          results: Json
+          runtime_ms: number | null
+          score: number
+          source_code: string
+          status: string
+          total_count: number
+          total_score: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          language: string
+          memory_kb?: number | null
+          passed_count?: number
+          problem_id: string
+          results?: Json
+          runtime_ms?: number | null
+          score?: number
+          source_code: string
+          status?: string
+          total_count?: number
+          total_score?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          language?: string
+          memory_kb?: number | null
+          passed_count?: number
+          problem_id?: string
+          results?: Json
+          runtime_ms?: number | null
+          score?: number
+          source_code?: string
+          status?: string
+          total_count?: number
+          total_score?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "submissions_problem_id_fkey"
+            columns: ["problem_id"]
+            isOneToOne: false
+            referencedRelation: "problems"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      test_cases: {
+        Row: {
+          created_at: string
+          expected_output: string
+          id: string
+          input: string
+          is_sample: boolean
+          ord: number
+          points: number
+          problem_id: string
+        }
+        Insert: {
+          created_at?: string
+          expected_output?: string
+          id?: string
+          input?: string
+          is_sample?: boolean
+          ord?: number
+          points?: number
+          problem_id: string
+        }
+        Update: {
+          created_at?: string
+          expected_output?: string
+          id?: string
+          input?: string
+          is_sample?: boolean
+          ord?: number
+          points?: number
+          problem_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "test_cases_problem_id_fkey"
+            columns: ["problem_id"]
+            isOneToOne: false
+            referencedRelation: "problems"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -200,6 +381,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
