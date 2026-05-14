@@ -14,7 +14,7 @@ type Problem = {
   related_algo: string | null;
 };
 
-export const Route = createFileRoute("/problems")({
+export const Route = createFileRoute("/problems/")({
   head: () => ({
     meta: [
       { title: "Bài tập — Algorithmica Judge" },
